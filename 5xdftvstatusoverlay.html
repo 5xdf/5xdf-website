@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+        @import url("https://github.com/hprobotic/Google-Sans-Font/raw/master/GoogleSans-Regular.ttf");
+        * {
+          font-family: 'Google Sans', sans-serif;
+          transition:1s;
+        }
+        .overlay {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(50,50,50,0.8);
+            color: #fff;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 20px;
+            padding-right: 20px;
+            border-radius: 500px;
+            display: block; /* Initially hidden */
+            border: 1px solid rgba(0,0,0,1);
+        }
+      .underlay {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background-color: rgba(50,50,50,0.8);
+            color: #fff;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 20px;
+            padding-right: 20px;
+            border-radius: 500px;
+            display: block; /* Initially hidden */
+            border: 1px solid rgba(0,0,0,1);
+        }
+        .littlenote {
+          position: fixed;
+          top: 120px;
+          right: 20px;
+          background-color: rgba(50,50,50,0.8);
+          color: #fff;
+          font-size:10px;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          padding-left: 20px;
+          padding-right: 20px;
+          border-radius: 500px;
+          display: block; /* Initially hidden */
+          border: 1px solid rgba(0,0,0,1);
+        }
+    </style>
+  </head>
+  <body>
+    <script src="https://5xdftv.statuspage.io/embed/script.js"></script>
+    <div class="overlay" id="notificationOverlay">
+        No issues, running normally!
+    </div>
+    <div class="underlay" id="h">
+      No new levels will be added right now.
+    </div>
+    <div class="littlenote" id="o">
+      This overlay refreshes every 30 seconds.
+    </div>
+    <script>
+      setTimeout(()=> {
+        window.location.reload();
+      },30000)
+    </script>
+  </body>
+</html>
