@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<body onload="loadXMLdoc()">
+<h1 id="alert">! Currently Active Alerts !</h1>
+<p id="demo"></p>
+<script>
+  var severealerts = ["tornado warning", "excessive heat warning", "hurricane warning", "hurricane watch", "tornado warning", "tornado watch", "severe thunderstorm warning", "severe thunderstorm watch", "flood watch", "flood warning", "flash flood warning", "flash flood watch", "red flag warning", "beach hazards statement", "coastal flood warning"];
+    
+    function findseverealert(alert) {
+      try {
+        var doesit = severealerts.includes(alert);
+        //window.alert(`found alert ${alert.toLowerCase()} in severe alert index`);
+        return doesit;
+      } catch(err) {
+        //window.alert(`didnt find alert ${alert.toLowerCase()} in severe alert index (${err})`);
+        return false;
+      }
+    }
+  function loadXMLdoc() {
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      //setTimeout(1000,myFunction(this));
+      myFunction(this);
+    }
+  };
+  xmlhttp.open("GET", "https://api.weather.gov/alerts/active.atom?area=OH", true);
+  xmlhttp.send();
+  }
+
+  function myFunction(xml) {
+    var x, x2, x3, i, i2, i3, i4, xmlDoc, txt, currentAlerts, nwsheadlineindexes, alertnames, alertsonpage;
+    xmlDoc = xml.responseXML;
+    txt = "";
+    x = xmlDoc.getElementsByTagName("value");
+    x2 = xmlDoc.getElementsByTagName("valueName");
+    x3 = xmlDoc.getElementsByTagName("cap:event");
+    currentAlerts = [];
+    nwsheadlineindexes = [];
+    alertnames = [];
+    alertsonpage = [];
+    try {
+      for (i = 0; i< x.length; i++) {
+        currentAlerts.push(x[i].textContent);
+      }
+    } catch(err) {
+  	  window.alert("oops: "+err)
+    }
+    try {
+  	  for (i2 = 0; i2< x2.length; i2++) {
+  	    if (x2[i2].parentNode.tagName == "cap:parameter") {
+          if (x2[i2].textContent == "NWSheadline") {
+            //window.alert("index of NWSheadline xml item: "+i2)
+            nwsheadlineindexes.push(i2);
+            // txt += i2+ " " + x2[i2].textContent + "<br>";
+          }
+        }
+  	  }
+    } catch(err) {
+  	  window.alert("oops: "+err);
+    }
+    try {
+  	  for (i4 = 0; i4 < x3.length; i4++) {
+  	    if (findseverealert(x3[i4].textContent.toLowerCase()) == true) {
+          alertnames.push(x3[i4].textContent + " ⚠ ");
+        } else {
+          alertnames.push(x3[i4].textContent);
+        }
+  	  }
+    } catch(err) {
+  	  window.alert("oops: "+err);
+    }
+    try {
+    	for (i3 = 0; i3 < nwsheadlineindexes.length; i3++) {
+  	   // txt += nwsheadlineindexes[i3] + " " +currentAlerts[nwsheadlineindexes[i3]] + "<br>";
+      }
+    } catch(err) {
+    	window.alert(err);
+    }
+    //window.alert(x3);
+    //window.alert(nwsheadlineindexes.length);
+    //window.alert(currentAlerts);
+    //window.alert(nwsheadlineindexes);
+    try {
+    	for (ii = 0; ii < nwsheadlineindexes.length; ii++) {
+    		if (alertsonpage.includes(alertnames[ii]) == true) {
+        		console.log("alert already indexed");
+        	} else {
+        		var idk = document.getElementById("alert");
+        		var idk_cloned = idk.cloneNode(true);
+        		document.body.appendChild(idk_cloned);
+        		document.body.appendChild(document.createElement("center"));
+        		idk_cloned.textContent = `${alertnames[ii]}`;
+            	alertsonpage.push(alertnames[ii]);
+        	}
+    	}
+    } catch(err) {
+    	window.alert(err);
+    }
+    // window.alert("Event Name: " + alertnames[0] + " Event Summary: " + currentAlerts[nwsheadlineindexes[0]]);
+    // window.alert(currentAlerts[nwsheadlineindexes[0]-1]);
+  }
+</script>
+
+
+<style>
+	@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+	#alert {
+    	font-family: "Chakra Petch";
+    	font-size: 20px;
+        text-align:center;
+        background-color: #000000;
+        border-radius: 25px;
+        display: inline-block;
+        color: #ffffff;
+        margin:10px;
+        padding:20px;
+        
+    }
+</style>
+</body>
+</html>
+
