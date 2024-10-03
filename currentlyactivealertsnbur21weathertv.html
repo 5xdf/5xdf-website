@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body onload="loadXMLdoc()">
-<h1 id="alert">! Currently Active Alerts !</h1>
+<h1 id="alert">Currently Active Alerts</h1>
 <p id="demo"></p>
 <script>
   var severealerts = ["tornado warning", "excessive heat warning", "hurricane warning", "hurricane watch", "tornado warning", "tornado watch", "severe thunderstorm warning", "severe thunderstorm watch", "flood watch", "flood warning", "flash flood warning", "flash flood watch", "red flag warning", "beach hazards statement", "coastal flood warning"];
@@ -100,6 +100,10 @@
     // window.alert("Event Name: " + alertnames[0] + " Event Summary: " + currentAlerts[nwsheadlineindexes[0]]);
     // window.alert(currentAlerts[nwsheadlineindexes[0]-1]);
   }
+	function docreload() {
+		window.location.reload();
+	}
+	setTimeout(docreload,30000);
 </script>
 
 
